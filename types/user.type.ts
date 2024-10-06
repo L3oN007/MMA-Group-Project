@@ -1,6 +1,10 @@
+export enum UserRole {
+  ADMIN = "ADMIN",
+}
+
 export type IUser = {
-  id: number;
+  id: string;
   name: string;
-  email: string;
+  role: UserRole;
 };
 

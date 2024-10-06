@@ -1,2 +1,4 @@
 {
+    // turn of c.spellcheck
+    "cSpell.enabled": false
 }
