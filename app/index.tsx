@@ -76,11 +76,12 @@ const LoginPage = () => {
           <Text className="mb-4 text-red-500">{errors.password.message}</Text>
         )}
         <Pressable
-          className="rounded-lg bg-blue-500 px-4 py-2"
+          className="bg-primary-600 rounded-lg px-4 py-2"
           onPress={handleSubmit(onSubmit)}
         >
           <Text className="text-white">Login</Text>
         </Pressable>
+
         <Pressable
           className="mt-2 rounded-lg border border-gray-300 bg-white px-4 py-2"
           onPress={() => router.push("/home")}
