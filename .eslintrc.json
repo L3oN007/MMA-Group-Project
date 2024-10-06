@@ -1,0 +1,32 @@
+{
+    "extends": [
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "plugins": [
+        "unused-imports",
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "unused-imports/no-unused-imports": "error",
+        "@typescript-eslint/no-unused-vars": "off",
+        "unused-imports/no-unused-vars": [
+            "warn",
+            {
+                "vars": "all",
+                "varsIgnorePattern": "^_",
+                "args": "after-used",
+                "argsIgnorePattern": "^_"
+            }
+        ]
+    },
+    "settings": {
+        "tailwindcss": {
+            "callees": [
+                "cn",
+                "cva"
+            ],
+            "config": "./tailwind.config.ts",
+            "classRegex": "^(class(Name)?|tw)$"
+        }
+    }
+}
