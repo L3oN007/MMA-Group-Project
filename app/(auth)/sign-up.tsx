@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Alert, Image, ScrollView, Text, View } from "react-native";
+import { Alert, Image, Text, View } from "react-native";
 
 import icons from "@/constants/Icons";
 import { images } from "@/constants/Image";
@@ -14,6 +14,7 @@ import useAuth from "@/hooks/useAuth";
 
 import CustomButton from "@/components/global/custom-button";
 import InputField from "@/components/global/input-field";
+import ParallaxScrollView from "@/components/global/parallax-scrool-view";
 
 export default function SignUp() {
   const { register } = useAuth();
@@ -39,160 +40,155 @@ export default function SignUp() {
     Alert.alert(JSON.stringify(data));
   };
   return (
-    <ScrollView className="flex-1 bg-white">
+    <ParallaxScrollView
+      headerBackgroundColor={{ light: "#ffff", dark: "#ffff" }}
+      headerImage={
+        <Image source={images.koiBackground} className="z-0 h-[250px] w-full" />
+      }
+    >
       <View className="flex-1 bg-white">
-        <View className="relative h-[250px] w-full">
-          <View className="absolute inset-0 z-10" />
-          <Image
-            source={images.koiBackground}
-            className="z-0 h-[250px] w-full"
-          />
-          {/* This the view */}
-          <View />
-          <Text className="absolute bottom-5 left-5 z-20 font-psemibold text-2xl text-white">
-            Create Your Account
-          </Text>
-        </View>
+        <View className="flex-1 bg-white">
+          <Image source={images.logo} className="z-0 h-[200px] w-full" />
 
-        <View className="p-5">
-          {/* Full Name */}
-          <Controller
-            control={control}
-            name="fullName"
-            render={({ field: { onChange, value } }) => (
-              <InputField
-                label="Full Name"
-                placeholder="Enter name"
-                placeholderTextColor={"gray"}
-                icon={icons.person}
-                value={value}
-                onChangeText={onChange}
-              />
-            )}
-          />
-          <ErrorMessage
-            errors={errors}
-            name="fullName"
-            render={({ message }) => (
-              <Text className="text-red-500">{message}</Text>
-            )}
-          />
-          {/* Full Name */}
-          {/* Email */}
-          <Controller
-            control={control}
-            name="email"
-            render={({ field: { onChange, value } }) => (
-              <InputField
-                label="Email"
-                placeholder="Enter email"
-                icon={icons.email}
-                placeholderTextColor={"gray"}
-                textContentType="emailAddress"
-                onChangeText={onChange}
-                value={value}
-              />
-            )}
-          />
-          <ErrorMessage
-            errors={errors}
-            name="email"
-            render={({ message }) => (
-              <Text className="text-red-500">{message}</Text>
-            )}
-          />
-          {/* Email */}
+          <View className="p-5">
+            {/* Full Name */}
+            <Controller
+              control={control}
+              name="fullName"
+              render={({ field: { onChange, value } }) => (
+                <InputField
+                  label="Full Name"
+                  placeholder="Enter name"
+                  placeholderTextColor={"gray"}
+                  icon={icons.person}
+                  value={value}
+                  onChangeText={onChange}
+                />
+              )}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="fullName"
+              render={({ message }) => (
+                <Text className="text-red-500">{message}</Text>
+              )}
+            />
+            {/* Full Name */}
+            {/* Email */}
+            <Controller
+              control={control}
+              name="email"
+              render={({ field: { onChange, value } }) => (
+                <InputField
+                  label="Email"
+                  placeholder="Enter email"
+                  icon={icons.email}
+                  placeholderTextColor={"gray"}
+                  textContentType="emailAddress"
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="email"
+              render={({ message }) => (
+                <Text className="text-red-500">{message}</Text>
+              )}
+            />
+            {/* Email */}
 
-          {/* Phone Number */}
-          <Controller
-            control={control}
-            name="phoneNumber"
-            render={({ field: { onChange, value } }) => (
-              <InputField
-                label="Phone"
-                placeholder="Enter phone"
-                icon={icons.phone}
-                placeholderTextColor={"gray"}
-                textContentType="telephoneNumber"
-                onChangeText={onChange}
-                value={value}
-              />
-            )}
-          />
-          <ErrorMessage
-            errors={errors}
-            name="phoneNumber"
-            render={({ message }) => (
-              <Text className="text-red-500">{message}</Text>
-            )}
-          />
-          {/* phone Number */}
+            {/* Phone Number */}
+            <Controller
+              control={control}
+              name="phoneNumber"
+              render={({ field: { onChange, value } }) => (
+                <InputField
+                  label="Phone"
+                  placeholder="Enter phone"
+                  icon={icons.phone}
+                  placeholderTextColor={"gray"}
+                  textContentType="telephoneNumber"
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="phoneNumber"
+              render={({ message }) => (
+                <Text className="text-red-500">{message}</Text>
+              )}
+            />
+            {/* phone Number */}
 
-          {/* Password */}
-          <Controller
-            control={control}
-            name="password"
-            render={({ field: { onChange, value } }) => (
-              <InputField
-                label="Password"
-                placeholder="Enter password"
-                icon={icons.lock}
-                placeholderTextColor={"gray"}
-                secureTextEntry={true}
-                textContentType="password"
-                onChangeText={onChange}
-                value={value}
-              />
-            )}
-          />
-          <ErrorMessage
-            errors={errors}
-            name="password"
-            render={({ message }) => (
-              <Text className="text-red-500">{message}</Text>
-            )}
-          />
-          {/* Password */}
-          {/* Confirm Password */}
-          <Controller
-            control={control}
-            name="confirmPassword"
-            render={({ field: { onChange, value } }) => (
-              <InputField
-                label="Confirm Password"
-                placeholder="Enter password"
-                icon={icons.lock}
-                placeholderTextColor={"gray"}
-                secureTextEntry={true}
-                textContentType="password"
-                onChangeText={onChange}
-                value={value}
-              />
-            )}
-          />
-          <ErrorMessage
-            errors={errors}
-            name="confirmPassword"
-            render={({ message }) => (
-              <Text className="text-red-500">{message}</Text>
-            )}
-          />
-          {/* Confirm Password */}
-          <CustomButton
-            title="Sign Up"
-            className="mt-6"
-            onPress={handleSubmit(onSubmit)}
-          />
-          <View className="mt-4 flex-row justify-center text-center">
-            <Text className="text-general-200 text-center font-pregular">
-              Already have an account?
-            </Text>
-            <Link href="/sign-in" className="ml-2 text-center font-pregular">
-              <Text className="text-primary-500">Log In</Text>
-            </Link>
+            {/* Password */}
+            <Controller
+              control={control}
+              name="password"
+              render={({ field: { onChange, value } }) => (
+                <InputField
+                  label="Password"
+                  placeholder="Enter password"
+                  icon={icons.lock}
+                  placeholderTextColor={"gray"}
+                  secureTextEntry={true}
+                  textContentType="password"
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="password"
+              render={({ message }) => (
+                <Text className="text-red-500">{message}</Text>
+              )}
+            />
+            {/* Password */}
+            {/* Confirm Password */}
+            <Controller
+              control={control}
+              name="confirmPassword"
+              render={({ field: { onChange, value } }) => (
+                <InputField
+                  label="Confirm Password"
+                  placeholder="Enter password"
+                  icon={icons.lock}
+                  placeholderTextColor={"gray"}
+                  secureTextEntry={true}
+                  textContentType="password"
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="confirmPassword"
+              render={({ message }) => (
+                <Text className="text-red-500">{message}</Text>
+              )}
+            />
+            {/* Confirm Password */}
+            <CustomButton
+              title="Sign Up"
+              className="mt-6"
+              onPress={handleSubmit(onSubmit)}
+            />
+            <View className="mt-4 flex-row justify-center text-center">
+              <Text className="text-general-200 text-center font-pregular">
+                Already have an account?
+              </Text>
+              <Link href="/sign-in" className="ml-2 text-center font-pregular">
+                <Text className="text-primary-500">Log In</Text>
+              </Link>
+            </View>
           </View>
-        </View>
-        {/* <ReactNativeModal
+          {/* <ReactNativeModal
         isVisible={verification.state === "pending"}
         // onBackdropPress={() =>
         //   setVerification({ ...verification, state: "default" })
@@ -251,8 +247,9 @@ export default function SignUp() {
           />
         </View>
       </ReactNativeModal> */}
+        </View>
       </View>
-    </ScrollView>
+    </ParallaxScrollView>
   );
 }
 
