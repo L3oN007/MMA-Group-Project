@@ -10,14 +10,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 
-import useAuth from "@/hooks/useAuth";
-
 import CustomButton from "@/components/global/custom-button";
 import InputField from "@/components/global/input-field";
 import ParallaxScrollView from "@/components/global/parallax-scrool-view";
 
 export default function SignUp() {
-  const { register } = useAuth();
   const {
     control,
     handleSubmit,
@@ -180,7 +177,7 @@ export default function SignUp() {
               onPress={handleSubmit(onSubmit)}
             />
             <View className="mt-4 flex-row justify-center text-center">
-              <Text className="text-general-200 text-center font-pregular">
+              <Text className="text-center font-pregular text-general-200">
                 Already have an account?
               </Text>
               <Link href="/sign-in" className="ml-2 text-center font-pregular">
@@ -252,4 +249,3 @@ export default function SignUp() {
     </ParallaxScrollView>
   );
 }
-

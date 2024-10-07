@@ -1,47 +1,27 @@
 import authService from "@/services/auth.service";
+import useAuthStore from "@/stores/useAuthStore";
 import { useMutation } from "@tanstack/react-query";
 
-const useAuth = () => {
-  const loginMutation = useMutation({
-    mutationKey: ["login"],
-    mutationFn: async (variables: { email: string; password: string }) => {
-      const { email, password } = variables;
-      const res = await authService.login(email, password);
-      return res;
+const useSignIn = () => {
+  const { setToken, setExpired, setRefreshToken } = useAuthStore();
+  return useMutation({
+    mutationFn: ({ email, password }: { email: string; password: string }) => {
+      return authService.login(email, password);
+    },
+    onSuccess: (signInResponse) => {
+      const { jwt, jwtRefreshToken, expired } = signInResponse.data;
+      if (jwt && jwtRefreshToken && expired) {
+        setToken(jwt);
+        setRefreshToken(jwtRefreshToken);
+        setExpired(new Date(expired));
+      }
+    },
+
+    onError: (error) => {
+      console.error("Login error:", error.message);
     },
   });
-
-  const registerMutation = useMutation({
-    mutationKey: ["register"],
-    mutationFn: async (variables: {
-      email: string;
-      password: string;
-      fullName: string;
-      dob: string;
-      phoneNumber: string;
-      imageUrl: string;
-      address: string;
-    }) => {
-      const { email, password, fullName, dob, phoneNumber, imageUrl, address } =
-        variables;
-      const res = await authService.register(
-        email,
-        password,
-        fullName,
-        dob,
-        phoneNumber,
-        imageUrl,
-        address
-      );
-      return res;
-    },
-  });
-
-  return {
-    login: loginMutation,
-    register: registerMutation,
-  };
 };
 
-export default useAuth;
+export { useSignIn };
 

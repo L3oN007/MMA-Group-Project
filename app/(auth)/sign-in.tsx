@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Image, Text, View } from "react-native";
+import { Alert, Image, Text, View } from "react-native";
 
 import icons from "@/constants/Icons";
 import { images } from "@/constants/Image";
@@ -11,7 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, router } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 
-import useAuth from "@/hooks/useAuth";
+import { useSignIn } from "@/hooks/useAuth";
 
 import CustomButton from "@/components/global/custom-button";
 import InputField from "@/components/global/input-field";
@@ -19,7 +19,7 @@ import ParallaxScrollView from "@/components/global/parallax-scrool-view";
 
 export default function SignIn() {
   const { setIsAuthenticated } = useAuthStore();
-  const { login } = useAuth();
+  const { mutateAsync: signIn, isPending: isSignInPending } = useSignIn();
   const {
     control,
     handleSubmit,
@@ -27,12 +27,20 @@ export default function SignIn() {
   } = useForm<SignInFormType>({
     resolver: zodResolver(SignInFormSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "admin@gmail.com",
+      password: "123456",
     },
   });
 
-  const onSubmit = async (data: SignInFormType) => {};
+  const onSubmit = async (values: SignInFormType) => {
+    const data = await signIn(values);
+    if (data.isSuccess) {
+      setIsAuthenticated(true);
+      router.replace("/(root)/(tabs)/home");
+    } else {
+      Alert.alert("Fail to login");
+    }
+  };
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#ffff", dark: "#ffff" }}
@@ -96,6 +104,7 @@ export default function SignIn() {
             {/* Password */}
 
             <CustomButton
+              disabled={isSignInPending}
               title="Sign In"
               className="mt-6"
               onPress={handleSubmit(onSubmit)}

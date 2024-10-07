@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const http = axios.create({
-  baseURL: process.env.BACKEND_URL,
+  baseURL: "https://koi.eventzone.id.vn/",
   headers: {
     "Content-Type": "application/json",
   },
