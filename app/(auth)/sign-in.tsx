@@ -1,13 +1,14 @@
 import React from "react";
 
-import { Alert, Image, Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 
 import icons from "@/constants/Icons";
 import { images } from "@/constants/Image";
+import useAuthStore from "@/stores/useAuthStore";
 import { SignInFormSchema, SignInFormType } from "@/validators/auth.validator";
 import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 
 import useAuth from "@/hooks/useAuth";
@@ -17,6 +18,7 @@ import InputField from "@/components/global/input-field";
 import ParallaxScrollView from "@/components/global/parallax-scrool-view";
 
 export default function SignIn() {
+  const { setIsAuthenticated } = useAuthStore();
   const { login } = useAuth();
   const {
     control,
@@ -30,9 +32,7 @@ export default function SignIn() {
     },
   });
 
-  const onSubmit = async (data: SignInFormType) => {
-    Alert.alert(JSON.stringify(data));
-  };
+  const onSubmit = async (data: SignInFormType) => {};
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#ffff", dark: "#ffff" }}
@@ -101,13 +101,21 @@ export default function SignIn() {
               onPress={handleSubmit(onSubmit)}
             />
             <View className="mt-4 flex-row justify-center text-center">
-              <Text className="text-general-200 text-center font-pregular">
+              <Text className="text-center font-pregular text-general-200">
                 Don't have an account?
               </Text>
               <Link href="/sign-up" className="ml-2 text-center font-pregular">
                 <Text className="text-primary-500">Sign Up</Text>
               </Link>
             </View>
+            <CustomButton
+              title="Bypass Sign In"
+              onPress={() => {
+                setIsAuthenticated(true);
+                router.replace("/(root)/(tabs)/home");
+              }}
+              bgVariant="secondary"
+            />
           </View>
           {/* <ReactNativeModal
         isVisible={verification.state === "pending"}
@@ -173,4 +181,3 @@ export default function SignIn() {
     </ParallaxScrollView>
   );
 }
-

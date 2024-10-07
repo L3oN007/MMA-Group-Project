@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import * as SplashScreen from "expo-splash-screen";
+import useAuthStore from "@/stores/useAuthStore";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { router, Stack, useSegments } from "expo-router";
 import { NativeWindStyleSheet } from "nativewind";
 import "react-native-reanimated";
 
@@ -15,7 +16,10 @@ NativeWindStyleSheet.setOutput({
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  const { isAuthenticated } = useAuthStore();
+  const segments = useSegments();
   const queryClient = new QueryClient();
+  const [hasMounted, setHasMounted] = useState(false);
   const [fontsLoaded, error] = useFonts({
     "Poppins-Black": require("../assets/fonts/Poppins-Black.ttf"),
     "Poppins-Bold": require("../assets/fonts/Poppins-Bold.ttf"),
@@ -27,6 +31,25 @@ export default function RootLayout() {
     "Poppins-SemiBold": require("../assets/fonts/Poppins-SemiBold.ttf"),
     "Poppins-Thin": require("../assets/fonts/Poppins-Thin.ttf"),
   });
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hasMounted) return;
+
+    const isInProtectedRoute = segments[0] === "(root)";
+    const isInAuthRoute = segments[0] === "(auth)";
+
+    if (!isAuthenticated && isInProtectedRoute) {
+      router.replace("/(auth)/sign-in");
+    }
+
+    if (isAuthenticated && isInAuthRoute) {
+      router.replace("/(root)/(tabs)/home");
+    }
+  }, [hasMounted, isAuthenticated, segments, router]);
 
   useEffect(() => {
     if (error) throw error;
