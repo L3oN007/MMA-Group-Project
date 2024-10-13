@@ -1,10 +1,11 @@
 import React from "react";
 
-import { Image, Text, View } from "react-native";
+import { Image, Pressable, Text, View } from "react-native";
 
 import { images } from "@/constants/Image";
 import Feather from "@expo/vector-icons/Feather";
 import { format } from "date-fns";
+import { router } from "expo-router";
 
 import { IBlog } from "@/types/blog.type";
 
@@ -16,7 +17,10 @@ type Props = {
 
 function BlogItem({ blog }: Props) {
   return (
-    <View className="text-card-foreground mb-4 rounded-xl border border-gray-200 bg-white shadow">
+    <Pressable
+      className="text-card-foreground mb-4 rounded-xl border border-gray-200 bg-white shadow"
+      onPress={() => router.navigate(`/(root)/blog/${blog.id}`)}
+    >
       <Image
         source={images.koiBackground2}
         className="h-40 w-full rounded-t-xl"
@@ -69,7 +73,7 @@ function BlogItem({ blog }: Props) {
           </View>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 }
 

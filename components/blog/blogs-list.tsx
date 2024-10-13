@@ -19,7 +19,7 @@ export default function BlogsList() {
     );
   }
 
-  if (isError) {
+  if (isError || !blogs) {
     return (
       <SafeAreaView className="flex-1 items-center justify-center bg-gray-50">
         <Text className="text-red-500">Error loading blogs!</Text>
@@ -33,6 +33,11 @@ export default function BlogsList() {
       renderItem={({ item }) => <BlogItem blog={item} />}
       keyExtractor={(item) => item.id}
       contentContainerStyle={{ paddingBottom: 20 }}
+      ListEmptyComponent={
+        <SafeAreaView className="my-10 flex-1 items-center justify-center bg-gray-50">
+          <Text className="text-gray-500">No blogs to display.</Text>
+        </SafeAreaView>
+      }
     />
   );
 }
