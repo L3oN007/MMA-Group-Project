@@ -1,19 +1,21 @@
 import React from "react";
 
-import { FlatList, SafeAreaView, Text } from "react-native";
+import { FlatList, SafeAreaView, ScrollView, Text } from "react-native";
 
 import { useBlogs } from "@/hooks/useBlog";
 
-import { BlogItem } from "@/components/blog/blog-item";
+import { BlogItem, BlogItemSkeleton } from "@/components/blog/blog-item";
 
 export default function BlogsList() {
   const { data: blogs, isLoading, isError } = useBlogs();
 
   if (isLoading) {
     return (
-      <SafeAreaView className="flex-1 items-center justify-center bg-gray-50">
-        <Text className="text-xl font-bold text-black">Loading blogs...</Text>
-      </SafeAreaView>
+      <ScrollView className="mb-10 flex-col">
+        {Array.from({ length: 4 }).map((_, index) => (
+          <BlogItemSkeleton key={index} />
+        ))}
+      </ScrollView>
     );
   }
 

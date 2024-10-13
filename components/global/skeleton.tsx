@@ -17,7 +17,7 @@ const NativeWindView = styled(View);
 
 const Skeleton: React.FC<ISkeletonProps> = ({
   variant = "rounded",
-  speed = 3,
+  speed = 2,
   isLoading = true,
   color = "#f4f4f5",
   className = "",
