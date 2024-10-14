@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 
 import {
   Image,
+  RefreshControl,
   SafeAreaView,
   ScrollView,
   Text,
@@ -11,14 +12,28 @@ import {
 
 import { images } from "@/constants/Image";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { router, useGlobalSearchParams } from "expo-router";
 
 import { useBlogById } from "@/hooks/useBlog";
 
 export default function BlogDetail() {
+  const queryClient = useQueryClient();
   const { blogId } = useGlobalSearchParams();
   const { data: blog, isLoading, isError } = useBlogById(blogId as string);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    try {
+      await queryClient.invalidateQueries({
+        queryKey: ["blog", blogId],
+      });
+    } finally {
+      setRefreshing(false);
+    }
+  }, [queryClient, blogId]);
 
   if (isLoading) {
     return (
@@ -38,7 +53,12 @@ export default function BlogDetail() {
 
   return (
     <SafeAreaView className="flex h-full flex-col bg-white px-4 py-6">
-      <ScrollView className="flex-1">
+      <ScrollView
+        className="flex-1"
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <View className="mb-2 px-4">
           <Text className="text-xl font-bold text-primary-400">Blog</Text>
         </View>
