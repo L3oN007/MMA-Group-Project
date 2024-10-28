@@ -1,10 +1,20 @@
 export enum UserRole {
   ADMIN = "ADMIN",
+  MANAGER = "MANAGER",
+  STAFF = "STAFF",
+  USER = "USER"
 }
 
 export type IUser = {
-  id: string;
-  name: string;
-  role: UserRole;
+  id: number;
+  fullName: string;
+  unsignFullName: string;
+  imageUrl: string;
+  roleName: UserRole;
+  address: string;
+  isActive: boolean;
+  isDeleted: boolean;
+  loyaltyPoints: number;
+  phoneNumber: string;
 };
 
