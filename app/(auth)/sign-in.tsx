@@ -11,6 +11,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, router } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 
+import { IUser, UserRole } from "@/types/user.type";
+
 import { useSignIn } from "@/hooks/useAuth";
 
 import CustomButton from "@/components/global/custom-button";
@@ -18,7 +20,7 @@ import InputField from "@/components/global/input-field";
 import ParallaxScrollView from "@/components/global/parallax-scrool-view";
 
 export default function SignIn() {
-  const { setIsAuthenticated } = useAuthStore();
+  const { setIsAuthenticated, setUser } = useAuthStore();
   const { mutateAsync: signIn, isPending: isSignInPending } = useSignIn();
   const {
     control,
@@ -32,11 +34,23 @@ export default function SignIn() {
     },
   });
 
+  const user: IUser = {
+    id: 1,
+    fullName: "Nguyen Van A",
+    unsignFullName: "nguyen van a",
+    imageUrl: "https://example.com/profile.jpg",
+    roleName: UserRole.USER,
+    address: "123 Le Loi Street, District 1, Ho Chi Minh City",
+    isActive: true,
+    isDeleted: false,
+    loyaltyPoints: 150,
+    phoneNumber: "0901234567",
+  };
+
   const onSubmit = async (values: SignInFormType) => {
     const data = await signIn(values);
     if (data.isSuccess) {
       setIsAuthenticated(true);
-      router.replace("/(root)/(tabs)/home");
     } else {
       Alert.alert("Fail to login");
     }
@@ -121,7 +135,8 @@ export default function SignIn() {
               title="Bypass Sign In"
               onPress={() => {
                 setIsAuthenticated(true);
-                router.replace("/(root)/(tabs)/home");
+                setUser(user);
+                router.navigate("/(root)/(userTabs)/home");
               }}
               bgVariant="secondary"
             />

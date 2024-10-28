@@ -1,8 +1,11 @@
-import { useUsers } from "@/hooks/userUsers";
-import useAuthStore from "@/stores/useAuthStore";
-import { UserRole } from "@/types/user.type";
-import { Stack } from "expo-router";
 import { useEffect } from "react";
+
+import useAuthStore from "@/stores/useAuthStore";
+import { Stack } from "expo-router";
+
+import { UserRole } from "@/types/user.type";
+
+import { useUsers } from "@/hooks/useUser";
 
 const Layout = () => {
   const { mutateAsync: getUserInfo, isPending: isGetting } = useUsers();
@@ -22,7 +25,7 @@ const Layout = () => {
       default:
         return tabs.user;
     }
-  }
+  };
   return (
     <Stack>
       <Stack.Screen name={`(adminTabs)`} options={{ headerShown: false }} />
@@ -32,10 +35,10 @@ const Layout = () => {
 };
 
 const tabs = {
-  user: 'userTabs',
-  staff: 'staffTabs',
-  manager: 'managerTabs',
-  admin: 'adminTabs',
-}
+  user: "userTabs",
+  staff: "staffTabs",
+  manager: "managerTabs",
+  admin: "adminTabs",
+};
 
 export default Layout;

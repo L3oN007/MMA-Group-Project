@@ -16,7 +16,7 @@ NativeWindStyleSheet.setOutput({
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, user } = useAuthStore();
   const segments = useSegments();
   const queryClient = new QueryClient();
   const [hasMounted, setHasMounted] = useState(false);
@@ -44,10 +44,6 @@ export default function RootLayout() {
 
     if (!isAuthenticated && isInProtectedRoute) {
       router.replace("/(auth)/sign-in");
-    }
-
-    if (isAuthenticated && isInAuthRoute) {
-      router.replace("/(root)/(tabs)/home");
     }
   }, [hasMounted, isAuthenticated, segments, router]);
 
