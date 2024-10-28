@@ -10,21 +10,27 @@ const fishService = {
    */
   getAllFishes: async () => {
     try {
-      const { data } = await axios.get<IFish[]>(
-        "api/v1/koi-fishes"
+      const { data } = await axios.get<{ isSuccess: boolean; data: IFish[] }>(
+        "https://koi-api.uydev.id.vn/api/v1/koi-fishes"
       );
-      return data;
+      if (!data.isSuccess) {
+        throw new Error("Failed to fetch fish data");
+      }
+  
+      return data.data;
     } catch (error) {
       if (error instanceof AxiosError) {
+        console.error("API Error:", error.response);
         const { message } = error.response?.data as IBackendErrorRes;
-        throw new Error(
-          `Error ${error.response?.status}: ${message || error.message}`
-        );
+        throw new Error(`Error ${error.response?.status}: ${message || error.message}`);
       } else {
+        console.error("Unexpected Error:", error);
         throw new Error("An unexpected error occurred with get all fish");
       }
     }
   },
+  
+  
 
   /**
    * Get a fish by its id
@@ -34,16 +40,14 @@ const fishService = {
    */
   getFishById: async (id: string) => {
     try {
-      const { data } = await axios.get<IFish>(
-        `api/v1/koi-fishes/${id}`
+      const { data } = await axios.get<{ data: IFish; isSuccess: boolean; message: string }>(
+        `https://koi-api.uydev.id.vn/api/v1/koi-fishes/${id}`
       );
-      return data;
+      return data.data;
     } catch (error) {
       if (error instanceof AxiosError) {
-        const { message } = error.response?.data as IBackendErrorRes; 
-        throw new Error(
-          `Error ${error.response?.status}: ${message || error.message}`
-        );
+        const { message } = error.response?.data as IBackendErrorRes;
+        throw new Error(`Error ${error.response?.status}: ${message || error.message}`);
       } else {
         throw new Error("An unexpected error occurred with get fish by id");
       }
