@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 
 import * as SplashScreen from "expo-splash-screen";
 import useAuthStore from "@/stores/useAuthStore";
@@ -62,6 +62,12 @@ export default function RootLayout() {
   if (!fontsLoaded && !error) {
     return null;
   }
+
+  // useEffect(() => {
+  //   if(isAuthenticated || user) {
+  //     router.navigate('/(root)/(adminTabs)/profile_');
+  //   }
+  // }, [isAuthenticated]);
 
   return (
     <QueryClientProvider client={queryClient}>
