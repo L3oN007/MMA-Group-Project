@@ -11,6 +11,7 @@ const useFish = () => {
   return useQuery({
     queryKey: ["fish"],
     queryFn: () => fishService.getAllFishes(),
+    throwOnError: true,
   });
 };
 
@@ -24,6 +25,7 @@ const useFishById = (id: string) => {
   return useQuery({
     queryKey: ["fish", id],
     queryFn: () => fishService.getFishById(id),
+    throwOnError: true,
   });
 };
 
