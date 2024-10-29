@@ -18,10 +18,14 @@ import { useSignIn } from "@/hooks/useAuth";
 import CustomButton from "@/components/global/custom-button";
 import InputField from "@/components/global/input-field";
 import ParallaxScrollView from "@/components/global/parallax-scrool-view";
+import { userService } from "@/services/users.service";
+import { useUsers } from "@/hooks/useUser";
 
 export default function SignIn() {
   const { setIsAuthenticated, setUser } = useAuthStore();
   const { mutateAsync: signIn, isPending: isSignInPending } = useSignIn();
+  const { mutateAsync: getUserInfo, isPending: isGetting } = useUsers();
+
   const {
     control,
     handleSubmit,
@@ -50,7 +54,13 @@ export default function SignIn() {
   const onSubmit = async (values: SignInFormType) => {
     const data = await signIn(values);
     if (data.isSuccess) {
+      // Init user data right after login
+      await getUserInfo();
       setIsAuthenticated(true);
+
+      // Navigate to corresponding route
+      const tabsRole = userService.getUserTabsByRole(user.roleName);
+      router.navigate(`/(${tabsRole})/profile_`);
     } else {
       Alert.alert("Fail to login");
     }

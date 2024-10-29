@@ -1,12 +1,8 @@
 import React from "react";
-
-import { Image, Text, View } from "react-native";
-
-import icons from "@/constants/Icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Tabs } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { TabIcon } from "@/components/navigation/tabIcon";
 
 const ManagerLayout = () => {
   return (
@@ -24,8 +20,8 @@ const ManagerLayout = () => {
           },
         }}
       >
-        {/* <Tabs.Screen
-          name="profile"
+         <Tabs.Screen
+          name="profile_"
           options={{
             title: "Profile",
             headerShown: false,
@@ -41,7 +37,7 @@ const ManagerLayout = () => {
               />
             ),
           }}
-        /> */}
+        />
       </Tabs>
 
       <StatusBar backgroundColor="#161622" style="dark" />

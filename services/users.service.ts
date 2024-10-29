@@ -1,7 +1,7 @@
 import { AxiosError } from "axios";
 
 import http from "@/lib/http";
-import { IUser } from "@/types/user.type";
+import { IUser, UserRole } from "@/types/user.type";
 
 const userService = {
   getCurrentUser: async (accessToken: string) => {
@@ -29,6 +29,23 @@ const userService = {
       }
     }
   },
+  getUserTabsByRole: (role: string | undefined) => {
+    switch (role) {
+      case UserRole.STAFF:
+      case UserRole.MANAGER:
+      case UserRole.ADMIN:
+        return tabs[role.toLocaleLowerCase() as keyof typeof tabs];
+      default:
+        return tabs.user;
+    }
+  }
+};
+
+const tabs = {
+  user: "userTabs",
+  staff: "staffTabs",
+  manager: "managerTabs",
+  admin: "adminTabs",
 };
 
 export { userService };
