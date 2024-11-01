@@ -3,6 +3,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { TabIcon } from "@/components/navigation/tabIcon";
+import icons from "@/constants/Icons";
 
 const StaffLayout = () => {
   return (
@@ -20,7 +21,22 @@ const StaffLayout = () => {
           },
         }}
       >
-         <Tabs.Screen
+        <Tabs.Screen
+          name="home"
+          options={{
+            title: "Home",
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon
+                icon={icons.home}
+                color={color}
+                name="Home"
+                focused={focused}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
           name="profile_"
           options={{
             title: "Profile",

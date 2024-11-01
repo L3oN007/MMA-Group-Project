@@ -1,3 +1,4 @@
+import { ErrorMessage } from '@hookform/error-message';
 import axios, { AxiosError } from "axios";
 
 import { IFish } from "@/types/fish.type";
@@ -29,9 +30,6 @@ const fishService = {
       }
     }
   },
-  
-  
-
   /**
    * Get a fish by its id
    * @param id The id of the fish to get
@@ -52,6 +50,23 @@ const fishService = {
         throw new Error("An unexpected error occurred with get fish by id");
       }
     }
+  },
+
+  deleteFishById: async(fishId: number, accessToken: string) => {
+    return axios.delete(
+      `https://koi-api.uydev.id.vn/api/v1/koi-fishes/${fishId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`, // Example for Authorization header
+          'Content-Type': 'application/json',
+        },
+    }
+    )
+      .then((res) => res)
+      .catch((err: any) => {
+        console.error('Failed to delete fish: status ', err.status, "message: ", err.message);
+        return null;
+      })
   },
 };
 

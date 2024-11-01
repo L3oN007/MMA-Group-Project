@@ -4,7 +4,11 @@ import { useFish } from "@/hooks/useFish";
 import { FishItem, FishItemSkeleton } from "@/components/fish/fish-item";
 
 export default function FishList() {
-  const { data: fishList, isLoading, isError } = useFish();
+  const { data: fishList, refetch: refreshFishList, isLoading, isError } = useFish();
+
+  const onTriggerUpdatedFish = () => {
+    refreshFishList();
+  }
 
   if (isLoading) {
     return (
@@ -28,7 +32,7 @@ export default function FishList() {
   return (
     <FlatList
       data={fishList}
-      renderItem={({ item }) => <FishItem fish={item} />}
+      renderItem={({ item }) => <FishItem onTriggerUpdatedFish={onTriggerUpdatedFish} fish={item} />}
       keyExtractor={(item) => item.id.toString()} // Ensure id is a string
       contentContainerStyle={{ paddingBottom: 20 }}
       ListEmptyComponent={
