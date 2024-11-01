@@ -53,8 +53,7 @@ export default function FishList() {
         <Text className="text-red-500">Error loading fish!</Text>
         {isError && (
           <Text className="text-gray-500">
-            {error?.message || "Unknown error"}
-          </Text>
+\          </Text>
         )}
       </SafeAreaView>
     );

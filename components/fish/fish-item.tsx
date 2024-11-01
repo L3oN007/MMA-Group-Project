@@ -2,7 +2,7 @@ import React from "react";
 
 import {
   Button,
-  Image,
+  // Image,
   Pressable,
   Text,
   TouchableOpacity,
@@ -38,11 +38,11 @@ function FishItem({ fish, onSelect }: Props) {
       className="mb-4 rounded-xl border border-gray-200 bg-white shadow"
       onPress={() => router.navigate(`/(root)/fish/${fish.id}`)}
     >
-      <Image
-        source={{ uri: fish.koiFishImages[0] || "" }}
+      {/* <Image
+        source={{ uri: fish?.koiFishImages[0] || "https://storage.googleapis.com/pod_public/1300/135218.jpg" }}
         className="h-40 w-full rounded-t-xl"
         resizeMode="center"
-      />
+      /> */}
       <View className="p-4">
         <View className="flex-row justify-between">
           <Text className="text-lg font-semibold text-black">{fish.name}</Text>
