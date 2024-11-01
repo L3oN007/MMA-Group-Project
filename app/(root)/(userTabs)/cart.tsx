@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 
 import {
   Alert,
+  Image,
   SafeAreaView,
   ScrollView,
   Text,
@@ -19,8 +20,6 @@ import { IDiet } from "@/types/diet.type";
 
 import { useCart } from "@/hooks/useCart";
 import { useDiet } from "@/hooks/useDiet";
-
-// Define types for consignment
 
 interface Consignment {
   isConsign: boolean;
@@ -45,8 +44,6 @@ export default function Cart() {
   }>({ fishId: null, mode: null });
 
   const today = new Date();
-
-  // Use the useDiet hook to get diet data
   const { data: diets, isLoading, isError } = useDiet();
 
   useFocusEffect(
@@ -61,7 +58,6 @@ export default function Cart() {
 
   const calculateTotalPrice = () => {
     let total = cart.reduce((sum, fish) => sum + fish.price, 0);
-
     for (const fishId in consignments) {
       const consignment = consignments[fishId];
       if (
@@ -72,7 +68,6 @@ export default function Cart() {
         total += consignment.selectedDiet.dietCost * consignment.duration;
       }
     }
-
     setTotalPrice(total);
   };
 
@@ -97,11 +92,7 @@ export default function Cart() {
       "Are you sure you want to remove all items from the cart?",
       [
         { text: "Cancel", style: "cancel" },
-        {
-          text: "Clear",
-          style: "destructive",
-          onPress: clearCart,
-        },
+        { text: "Clear", style: "destructive", onPress: clearCart },
       ]
     );
   };
@@ -184,11 +175,14 @@ export default function Cart() {
 
   return (
     <SafeAreaView className="flex h-full bg-gray-50 p-4">
-      <View className="mb-4 flex-row justify-between">
+      <View className="mb-4 flex-row items-center justify-between">
         <Text className="text-2xl font-bold">Your Cart</Text>
         {cart.length > 0 && (
-          <TouchableOpacity onPress={confirmClearCart} className="p-2">
-            <Text className="font-semibold text-red-500">Clear Cart</Text>
+          <TouchableOpacity
+            onPress={confirmClearCart}
+            className="rounded-lg bg-red-100 p-2"
+          >
+            <Text className="font-semibold text-red-600">Clear Cart</Text>
           </TouchableOpacity>
         )}
       </View>
@@ -197,18 +191,39 @@ export default function Cart() {
         <>
           <ScrollView className="flex-1">
             {cart.map((fish) => {
-              const fishIdStr = fish.id.toString(); // Convert fish.id to string
+              const fishIdStr = fish.id.toString();
               const consignment = consignments[fishIdStr] || {};
               return (
                 <View
                   key={fish.id}
-                  className="mb-4 rounded-lg bg-gray-50 p-4 shadow-sm"
+                  className="mb-4 rounded-lg bg-white p-4 shadow-lg"
                 >
-                  <Text className="text-lg font-semibold text-black">
-                    {fish.name}
-                  </Text>
-                  <Text className="text-gray-500">{fish.origin}</Text>
-                  <Text className="font-bold text-green-600">{`${fish.price} VND`}</Text>
+                  <Image
+                    source={{
+                      uri: "https://storage.googleapis.com/pod_public/1300/135218.jpg",
+                    }}
+                    className="h-40 w-full rounded-lg"
+                    resizeMode="cover"
+                  />
+                  <View className="mt-4 flex-row items-center justify-between">
+                    <View>
+                      <Text className="text-lg font-bold text-gray-800">
+                        {fish.name}
+                      </Text>
+                      <Text className="text-gray-500">{fish.origin}</Text>
+                    </View>
+                    <View className="items-end">
+                      <Text className="font-bold text-green-700">{`${fish.price} VND`}</Text>
+                      <View className="mt-1 flex-row items-center space-x-2">
+                        <Checkbox
+                          value={consignment.isConsign || false}
+                          onValueChange={() => handleConsignToggle(fishIdStr)}
+                          color={consignment.isConsign ? "#4CAF50" : undefined}
+                        />
+                        <Text className="text-gray-800">Consign</Text>
+                      </View>
+                    </View>
+                  </View>
 
                   <TouchableOpacity
                     onPress={() => confirmRemoveItem(fish.id)}
@@ -217,17 +232,9 @@ export default function Cart() {
                     <Feather name="trash" size={24} color="red" />
                   </TouchableOpacity>
 
-                  <View className="mt-2 flex-row items-center">
-                    <Checkbox
-                      value={consignment.isConsign || false}
-                      onValueChange={() => handleConsignToggle(fishIdStr)}
-                    />
-                    <Text className="ml-2">Consign</Text>
-                  </View>
-
                   {consignment.isConsign && (
                     <View className="mt-4 rounded-lg bg-gray-100 p-4">
-                      <Text className="mb-2 font-semibold">
+                      <Text className="mb-2 font-semibold text-gray-700">
                         Consignment Configuration
                       </Text>
                       <Picker
@@ -235,6 +242,7 @@ export default function Cart() {
                         onValueChange={(itemValue) =>
                           handleDietChange(fishIdStr, itemValue)
                         }
+                        style={{ backgroundColor: "#ffffff", borderRadius: 8 }}
                       >
                         <Picker.Item label="Select diet" value={null} />
                         {diets?.map((diet, index) => (
@@ -246,7 +254,7 @@ export default function Cart() {
                         ))}
                       </Picker>
 
-                      <View className="mt-4 flex-row items-center justify-between">
+                      <View className="mt-4 flex-row items-center justify-between space-x-2">
                         <TouchableOpacity
                           onPress={() =>
                             setShowDatePicker({
@@ -254,14 +262,14 @@ export default function Cart() {
                               mode: "start",
                             })
                           }
-                          className="flex-row items-center rounded border p-2"
+                          className="flex-1 flex-row items-center justify-center rounded border border-gray-300 p-2"
                         >
                           <Text>
                             {consignment.startDate?.toDateString() ||
                               today.toDateString()}
                           </Text>
                         </TouchableOpacity>
-                        <Text>to</Text>
+                        <Text className="text-gray-700">to</Text>
                         <TouchableOpacity
                           onPress={() =>
                             setShowDatePicker({
@@ -269,7 +277,7 @@ export default function Cart() {
                               mode: "end",
                             })
                           }
-                          className="flex-row items-center rounded border p-2"
+                          className="flex-1 flex-row items-center justify-center rounded border border-gray-300 p-2"
                         >
                           <Text>
                             {consignment.endDate?.toDateString() ||
@@ -277,19 +285,21 @@ export default function Cart() {
                           </Text>
                         </TouchableOpacity>
                       </View>
-                      <Text className="mt-2">
+                      <Text className="mt-2 text-gray-600">
                         Duration: {consignment.duration || 0} days
                       </Text>
 
-                      <Text className="mt-4">
-                        Daily Cost:{" "}
-                        {consignment.selectedDiet
-                          ? `${consignment.selectedDiet.dietCost} VND`
-                          : "N/A"}
-                      </Text>
-                      <Text className="mt-2">
-                        Estimated Price: {consignment.estimatedCost || 0} VND
-                      </Text>
+                      <View className="mt-4">
+                        <Text className="text-gray-600">
+                          Daily Cost:{" "}
+                          {consignment.selectedDiet
+                            ? `${consignment.selectedDiet.dietCost} VND`
+                            : "N/A"}
+                        </Text>
+                        <Text className="mt-1 text-gray-600">
+                          Estimated Price: {consignment.estimatedCost || 0} VND
+                        </Text>
+                      </View>
                     </View>
                   )}
                 </View>
@@ -301,7 +311,7 @@ export default function Cart() {
             <Text className="text-lg font-bold">{`Total: ${totalPrice.toFixed(0)} VND`}</Text>
             <TouchableOpacity
               onPress={() => alert("Proceeding to checkout...")}
-              className="rounded-lg bg-blue-500 p-4"
+              className="rounded-lg bg-blue-500 px-6 py-3"
             >
               <Text className="text-center font-semibold text-white">
                 Check Out
@@ -339,7 +349,7 @@ export default function Cart() {
           )}
         </>
       ) : (
-        <Text className="flex-1 items-center justify-center text-center text-2xl">
+        <Text className="flex-1 items-center justify-center text-center text-2xl text-gray-700">
           Your cart is empty
         </Text>
       )}
