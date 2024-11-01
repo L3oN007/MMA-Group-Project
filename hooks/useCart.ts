@@ -1,7 +1,9 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
-import { IFish } from "@/types/fish.type";
+
 import useAuthStore from "@/stores/useAuthStore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { IFish } from "@/types/fish.type";
 
 type UseCartReturn = {
   cart: IFish[];
@@ -17,7 +19,6 @@ export function useCart(): UseCartReturn {
   const [cart, setCart] = useState<IFish[]>([]);
   const storageKey = `cart_${user?.id}`;
 
-  // Load cart from async storage when the component mounts
   useEffect(() => {
     loadCart();
   }, []);

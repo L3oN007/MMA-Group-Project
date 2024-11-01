@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 
 import {
   Image,
@@ -9,20 +9,31 @@ import {
   View,
 } from "react-native";
 
+// Import useFocusEffect
 import useAuthStore from "@/stores/useAuthStore";
+import { useFocusEffect } from "@react-navigation/native";
+
+import { IFish } from "@/types/fish.type";
 
 import { useCart } from "@/hooks/useCart";
-import { IFish } from "@/types/fish.type";
+
 import CustomButton from "@/components/global/custom-button";
 
 export default function Profile() {
-  const { user, onLogout, token, refreshToken, expired } = useAuthStore();
-  const { cart, removeFromCart, clearCart } = useCart();
+  const { user, onLogout } = useAuthStore();
+  const { cart, removeFromCart, clearCart, loadCart } = useCart();
+
+  // Reload the cart data each time this screen is focused
+  useFocusEffect(
+    useCallback(() => {
+      loadCart(); // This loads the cart from AsyncStorage
+    }, [])
+  );
 
   return (
     <SafeAreaView className="flex-1 justify-between bg-gray-100">
       <View className="p-4">
-        {/* Thong tin User */}
+        {/* User Information */}
         <View className="flex-row gap-4">
           {user?.imageUrl ? (
             <Image
@@ -42,6 +53,7 @@ export default function Profile() {
           </View>
         </View>
 
+        {/* Contact Information */}
         <View className="mb-4 w-full px-4">
           <Text className="text-lg font-semibold text-gray-800">
             Contact Information
@@ -54,7 +66,7 @@ export default function Profile() {
           </Text>
         </View>
 
-          {/* Cart */}
+        {/* Cart Section */}
         <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
           <Text className="mb-2 text-xl font-semibold">My Cart</Text>
 
@@ -89,6 +101,7 @@ export default function Profile() {
         </ScrollView>
       </View>
 
+      {/* Logout Button */}
       <View className="p-4">
         <CustomButton
           title="Logout"
