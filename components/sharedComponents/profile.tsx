@@ -1,34 +1,14 @@
-import React, { useCallback } from "react";
+import React from "react";
 
-import {
-  Image,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, SafeAreaView, Text, View } from "react-native";
 
 // Import useFocusEffect
 import useAuthStore from "@/stores/useAuthStore";
-import { useFocusEffect } from "@react-navigation/native";
-
-import { IFish } from "@/types/fish.type";
-
-import { useCart } from "@/hooks/useCart";
 
 import CustomButton from "@/components/global/custom-button";
 
 export default function Profile() {
   const { user, onLogout } = useAuthStore();
-  const { cart, removeFromCart, clearCart, loadCart } = useCart();
-
-  // Reload the cart data each time this screen is focused
-  useFocusEffect(
-    useCallback(() => {
-      loadCart(); // This loads the cart from AsyncStorage
-    }, [])
-  );
 
   return (
     <SafeAreaView className="flex-1 justify-between bg-gray-100">
@@ -65,40 +45,6 @@ export default function Profile() {
             Address: {user?.address || "N/A"}
           </Text>
         </View>
-
-        {/* Cart Section */}
-        <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
-          <Text className="mb-2 text-xl font-semibold">My Cart</Text>
-
-          {cart.length === 0 ? (
-            <Text className="text-gray-500">Your cart is empty.</Text>
-          ) : (
-            cart.map((fish: IFish) => (
-              <View
-                key={fish.id}
-                className="flex-row items-center justify-between border-b border-gray-200 py-2"
-              >
-                <Text>{fish.name}</Text>
-                <TouchableOpacity
-                  onPress={() => removeFromCart(fish.id)}
-                  className="rounded bg-red-500 px-4 py-1"
-                >
-                  <Text className="text-white">Remove</Text>
-                </TouchableOpacity>
-              </View>
-            ))
-          )}
-
-          {/* Clear Cart Button */}
-          {cart.length > 0 && (
-            <TouchableOpacity
-              onPress={clearCart}
-              className="mt-4 rounded bg-red-500 p-2"
-            >
-              <Text className="text-center text-white">Clear Cart</Text>
-            </TouchableOpacity>
-          )}
-        </ScrollView>
       </View>
 
       {/* Logout Button */}
