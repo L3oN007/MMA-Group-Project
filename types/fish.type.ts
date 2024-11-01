@@ -1,4 +1,5 @@
 export interface IFish {
+  quantity: number
   id: number
   name: string
   origin: string
