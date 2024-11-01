@@ -5,6 +5,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Tabs } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+
 import { TabIcon } from "@/components/navigation/tabIcon";
 
 const TabLayout = () => {
@@ -60,7 +61,24 @@ const TabLayout = () => {
             ),
           }}
         />
-
+        <Tabs.Screen
+          name="cart"
+          options={{
+            title: "Cart",
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon
+                icon={
+                  <FontAwesome name="shopping-cart" size={24} color={color} />
+                }
+                color={color}
+                name="Cart"
+                focused={focused}
+                isExpoIcon={true}
+              />
+            ),
+          }}
+        />
         <Tabs.Screen
           name="profile_"
           options={{

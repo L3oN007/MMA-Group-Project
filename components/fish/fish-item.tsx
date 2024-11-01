@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 
 import {
   Button,
@@ -11,7 +11,7 @@ import {
 
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 
 import { IFish } from "@/types/fish.type";
 
@@ -25,7 +25,7 @@ type Props = {
 };
 
 function FishItem({ fish, onSelect }: Props) {
-  const { addToCart, removeFromCart, isInCart } = useCart();
+  const { addToCart, removeFromCart, isInCart, loadCart } = useCart();
   const handleCartToggle = () => {
     if (isInCart(fish.id)) {
       removeFromCart(fish.id);
@@ -33,6 +33,13 @@ function FishItem({ fish, onSelect }: Props) {
       addToCart(fish);
     }
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      loadCart(); // This loads the cart from AsyncStorage
+    }, [])
+  );
+
   return (
     <Pressable
       className="mb-4 rounded-xl border border-gray-200 bg-white shadow"
