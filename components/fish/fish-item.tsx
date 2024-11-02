@@ -86,13 +86,17 @@ function FishItem({ fish, onTriggerUpdatedFish }: Props) {
     },
   });
 
+  const onEditFish = () => {
+    router.navigate(`/fishInput/${fish.id}`);
+  }
+
   return (
     <Animated.View
       style={{
         transform: [{ translateX: translateX }],
       }}>
 
-      <Pressable className="absolute flex justify-center items-center w-36 bg-gray-600" style={{ right: -146, height: '95%' }}>
+      <Pressable onPress={onEditFish} className="absolute flex justify-center items-center w-36 bg-gray-600" style={{ right: -146, height: '95%' }}>
         <Text className="text-white">Edit</Text>
       </Pressable>
       <Pressable onPress={onAskDelete} className="absolute flex justify-center items-center w-36 bg-red-600" style={{ right: -292, height: '95%' }}>
