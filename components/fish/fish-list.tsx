@@ -2,12 +2,23 @@ import React from "react";
 import { FlatList, SafeAreaView, ScrollView, Text } from "react-native";
 import { useFish } from "@/hooks/useFish";
 import { FishItem, FishItemSkeleton } from "@/components/fish/fish-item";
+import useAuthStore from "@/stores/useAuthStore";
+import { UserRole } from "@/types/user.type";
+import { FishItemManage } from "./fish-item-manage";
 
 export default function FishList() {
+  const { user } = useAuthStore();
   const { data: fishList, refetch: refreshFishList, isLoading, isError } = useFish();
 
   const onTriggerUpdatedFish = () => {
     refreshFishList();
+  }
+
+  const onCheckPermission = () => {
+    if (!user) return false;
+
+    const allowedManageRole: UserRole[] = [UserRole.STAFF];
+    return allowedManageRole.includes(user.roleName);
   }
 
   if (isLoading) {
@@ -27,6 +38,22 @@ export default function FishList() {
         {isError && <Text className="text-gray-500">{error?.message || "Unknown error"}</Text>}
       </SafeAreaView>
     );
+  }
+
+  if (onCheckPermission()) {
+    return (
+      <FlatList
+        data={fishList}
+        renderItem={({ item }) => <FishItemManage onTriggerUpdatedFish={onTriggerUpdatedFish} fish={item} />}
+        keyExtractor={(item) => item.id.toString()} // Ensure id is a string
+        contentContainerStyle={{ paddingBottom: 20 }}
+        ListEmptyComponent={
+          <SafeAreaView className="my-10 flex-1 items-center justify-center bg-gray-50">
+            <Text className="text-gray-500">No fish to display.</Text>
+          </SafeAreaView>
+        }
+      />
+    )
   }
 
   return (
