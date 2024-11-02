@@ -89,7 +89,7 @@ export default function fishInput() {
     return (
         <ScrollView className="flex-1 bg-white">
             <Image
-                source={{ uri: interactedFish?.koiFishImages[0] || "default_image_url" }}
+                source={{uri: "https://storage.googleapis.com/pod_public/1300/135218.jpg"}}
                 className="h-56 w-full"
                 resizeMode="cover"
             />

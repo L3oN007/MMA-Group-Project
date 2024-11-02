@@ -107,7 +107,6 @@ function FishItemManage({ fish, onTriggerUpdatedFish }: Props) {
         <Pressable
           style={{ zIndex: 1 }}
           className="mb-4 rounded-xl border border-gray-200 bg-white shadow"
-          onPress={() => router.navigate(`/(root)/fish/${fish.id}`)}
         >
           <Image
             source={{
