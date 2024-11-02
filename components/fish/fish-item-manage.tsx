@@ -142,7 +142,7 @@ function FishItemManage({ fish, onTriggerUpdatedFish }: Props) {
 
               <View className="mt-2 flex-row items-center">
                 <Text className="ml-1 text-sm text-green-600" style={{color: fish.isAvailableForSale ? "green" : "red"}}>
-                  {fish.isAvailableForSale ? "Avaiable for sale" : "Not avaiable sale"}
+                  {fish.isAvailableForSale ? "Avaiable for sale" : "Not avaiable for sale"}
                 </Text>
               </View>
           </View>
