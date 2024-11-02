@@ -9,6 +9,7 @@ import Skeleton from "@/components/global/skeleton";
 import useAuthStore from "@/stores/useAuthStore";
 import { UserRole } from "@/types/user.type";
 import fishService from "@/services/fish.service";
+import { VnDong } from "@/utils/format";
 
 type Props = {
   fish: IFish;
@@ -101,7 +102,7 @@ function FishItemManage({ fish, onTriggerUpdatedFish }: Props) {
       </Pressable>
       <Pressable onPress={onAskDelete} className="absolute flex justify-center items-center w-36 bg-red-600" style={{ right: -292, height: '95%' }}>
         <Text className="text-white">Delete</Text>
-      </Pressable>
+      </Pressable> 
 
       <View {...panResponder.panHandlers}>
         <Pressable
@@ -132,14 +133,18 @@ function FishItemManage({ fish, onTriggerUpdatedFish }: Props) {
               </Text>
             </View>
 
-            {fish.isAvailableForSale && (
               <View className="mt-2 flex-row items-center">
                 <Feather name="tag" size={12} color="green" />
                 <Text className="ml-1 text-sm text-green-600">
-                  {fish.price.toFixed(0)} VND
+                  {VnDong.format(fish.price)}
                 </Text>
               </View>
-            )}
+
+              <View className="mt-2 flex-row items-center">
+                <Text className="ml-1 text-sm text-green-600" style={{color: fish.isAvailableForSale ? "green" : "red"}}>
+                  {fish.isAvailableForSale ? "Avaiable for sale" : "Not avaiable sale"}
+                </Text>
+              </View>
           </View>
         </Pressable>
       </View>
