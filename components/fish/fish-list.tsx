@@ -60,7 +60,7 @@ export default function FishList() {
   }
 
   return (
-    <View>
+    <View className="mb-14">
       {!isLoading && !isError && fishList && (
         <FlatList
           data={fishList}

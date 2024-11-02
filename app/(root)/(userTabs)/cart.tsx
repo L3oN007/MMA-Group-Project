@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 
+import { VnDong } from "@/utils/format";
 import Feather from "@expo/vector-icons/Feather";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
@@ -213,7 +214,7 @@ export default function Cart() {
                       <Text className="text-gray-500">{fish.origin}</Text>
                     </View>
                     <View className="items-end">
-                      <Text className="font-bold text-green-700">{`${fish.price} VND`}</Text>
+                      <Text className="font-bold text-green-700">{VnDong.format(fish.price)}</Text>
                       <View className="mt-1 flex-row items-center space-x-2">
                         <Checkbox
                           value={consignment.isConsign || false}
@@ -308,7 +309,9 @@ export default function Cart() {
           </ScrollView>
 
           <View className="my-4 flex-row items-center justify-around border-t border-gray-200 pt-4">
-            <Text className="text-lg font-bold">{`Total: ${totalPrice.toFixed(0)} VND`}</Text>
+            <Text className="text-lg font-bold">
+              {`Total: ${VnDong.format(totalPrice)}`}
+            </Text>
             <TouchableOpacity
               onPress={() => alert("Proceeding to checkout...")}
               className="rounded-lg bg-blue-500 px-6 py-3"

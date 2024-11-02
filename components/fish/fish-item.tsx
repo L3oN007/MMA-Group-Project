@@ -11,6 +11,7 @@ import { IFish } from "@/types/fish.type";
 import { useCart } from "@/hooks/useCart";
 
 import Skeleton from "@/components/global/skeleton";
+import { VnDong } from "@/utils/format";
 
 type Props = {
   fish: IFish;
@@ -74,14 +75,14 @@ function FishItem({ fish, onSelect }: Props) {
           </Text>
         </View>
 
-        {fish.isAvailableForSale && (
+        {/* {fish.isAvailableForSale && ( */}
           <View className="mt-3 flex-row items-center">
             <Feather name="tag" size={12} color="green" />
             <Text className="ml-1 text-sm font-medium text-green-600">
-              {fish.price.toFixed(0)} VND
+              {VnDong.format(fish.price)}
             </Text>
           </View>
-        )}
+        {/* )} */}
 
         {/* <TouchableOpacity
           onPress={() => onSelect(fish)}
