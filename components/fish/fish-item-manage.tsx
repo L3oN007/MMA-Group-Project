@@ -114,7 +114,7 @@ function FishItemManage({ fish, onTriggerUpdatedFish }: Props) {
               uri: "https://storage.googleapis.com/pod_public/1300/135218.jpg",
             }}
             className="h-40 w-full rounded-t-xl"
-            resizeMode="center"
+            resizeMode="cover"
           />
           <View className="p-4">
             <Text className="font-semibold text-lg text-black">
