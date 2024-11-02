@@ -2,7 +2,7 @@ export enum UserRole {
   ADMIN = "ADMIN",
   MANAGER = "MANAGER",
   STAFF = "STAFF",
-  USER = "USER"
+  USER = "USER",
 }
 
 export type IUser = {
@@ -18,3 +18,9 @@ export type IUser = {
   phoneNumber: string;
 };
 
+export type IWallet = {
+  userId: number;
+  balance: number;
+  loyaltyPoints: number;
+  status: "ACTIVE" | "INACTIVE" | "SUSPENDED";
+};

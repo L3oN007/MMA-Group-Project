@@ -9,6 +9,7 @@ import {
   View,
 } from "react-native";
 
+import { VnDong } from "@/utils/format";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { format } from "date-fns";
 
@@ -110,7 +111,7 @@ export default function FishDetail() {
 
         <InfoSection title="Price">
           <Text className="text-2xl font-bold text-green-600">
-            {fish.price ? `${fish.price.toFixed(0)} VND` : "Not for sale"}
+            {fish.price ? `${VnDong.format(fish.price)}` : "Not for sale"}
           </Text>
         </InfoSection>
 
