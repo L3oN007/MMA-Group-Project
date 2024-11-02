@@ -8,7 +8,11 @@ import useAuthStore from "@/stores/useAuthStore";
 import CustomButton from "@/components/global/custom-button";
 
 export default function Profile() {
+<<<<<<< HEAD
+  const { onLogout, token, refreshToken, expired, user } = useAuthStore();
+=======
   const { user, onLogout } = useAuthStore();
+>>>>>>> master
 
   return (
     <SafeAreaView className="flex-1 justify-between bg-gray-100">
@@ -33,6 +37,28 @@ export default function Profile() {
           </View>
         </View>
 
+<<<<<<< HEAD
+      <View className="w-11/12 rounded-lg bg-white p-4 shadow-md">
+        <Text className="text-base text-gray-700">
+          <Text className="font-semibold">Token: </Text>
+          {token ? token : "No token available"}
+        </Text>
+
+        <Text className="mt-2 text-base text-gray-700">
+          <Text className="font-semibold">Refresh Token: </Text>
+          {refreshToken ? refreshToken : "No refresh token available"}
+        </Text>
+
+        <Text className="mt-2 text-base text-gray-700">
+          <Text className="font-semibold">Expired: </Text>
+          {expired ? expired.toString() : "No expiration date available"}
+        </Text>
+
+        <Text className="mt-2 text-base text-gray-700">
+          <Text className="font-semibold">Role: </Text>
+          {user?.roleName}
+        </Text>
+=======
         {/* Contact Information */}
         <View className="mb-4 w-full px-4">
           <Text className="text-lg font-semibold text-gray-800">
@@ -45,6 +71,7 @@ export default function Profile() {
             Address: {user?.address || "N/A"}
           </Text>
         </View>
+>>>>>>> master
       </View>
 
       {/* Logout Button */}

@@ -17,7 +17,10 @@ const Layout = () => {
   useEffect(() => {
     if (!user) return;
     const tabsRole = userService.getUserTabsByRole(user?.roleName);
-    router.navigate(`/(${tabsRole})/profile_`);
+
+    try {
+      router.navigate(`/(${tabsRole})/profile_`);
+    } catch(err) {}
   }, [user]);
 
 
@@ -28,6 +31,7 @@ const Layout = () => {
       <Stack.Screen name='(managerTabs)' options={{ headerShown: false }} />
       <Stack.Screen name='(adminTabs)' options={{ headerShown: false }} />
       <Stack.Screen name="blog/[blogId]" options={{ headerShown: false }} />
+      <Stack.Screen name="fishInput/[fishId]" options={{ headerShown: false }} />
     </Stack>
   );
 };

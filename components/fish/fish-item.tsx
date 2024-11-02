@@ -1,15 +1,10 @@
 import React, { useCallback } from "react";
-
 import { Image, Pressable, Text, TouchableOpacity, View } from "react-native";
-
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
 import { router, useFocusEffect } from "expo-router";
-
 import { IFish } from "@/types/fish.type";
-
 import { useCart } from "@/hooks/useCart";
-
 import Skeleton from "@/components/global/skeleton";
 import { VnDong } from "@/utils/format";
 
@@ -76,22 +71,33 @@ function FishItem({ fish, onSelect }: Props) {
         </View>
 
         {/* {fish.isAvailableForSale && ( */}
-          <View className="mt-3 flex-row items-center">
-            <Feather name="tag" size={12} color="green" />
-            <Text className="ml-1 text-sm font-medium text-green-600">
-              {VnDong.format(fish.price)}
+        <View className="mt-3 flex-row items-center">
+          <Feather name="tag" size={12} color="green" />
+          <Text className="ml-1 text-sm font-medium text-green-600">
+            {VnDong.format(fish.price)}
+          </Text>
+          <Text className="text-sm text-gray-500">
+            Origin: {fish.origin} | Gender: {fish.gender}
+          </Text>
+
+          <View className="mt-2 flex-col justify-between">
+            <Text className="text-xs text-gray-500">
+              Length: {fish.length} cm
+            </Text>
+            <Text className="text-xs text-gray-500">
+              Last Check: {new Date(`${fish.lastHealthCheck}`).toLocaleDateString("en-GB")}
             </Text>
           </View>
-        {/* )} */}
 
-        {/* <TouchableOpacity
-          onPress={() => onSelect(fish)}
-          className="mt-3 rounded-lg bg-blue-500 px-3 py-2"
-        >
-          <Text className="text-center text-sm font-semibold text-white">
-            Compare
-          </Text>
-        </TouchableOpacity> */}
+          {fish.isAvailableForSale && (
+            <View className="mt-2 flex-row items-center">
+              <Feather name="tag" size={12} color="green" />
+              <Text className="ml-1 text-sm text-green-600">
+                {fish.price.toFixed(0)} VND
+              </Text>
+            </View>
+          )}
+        </View>
       </View>
     </Pressable>
   );

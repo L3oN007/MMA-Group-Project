@@ -4,11 +4,26 @@ import { useFish } from "@/hooks/useFish";
 import { FishItem, FishItemSkeleton } from "@/components/fish/fish-item";
 import ComparisonPopup from "@/components/fish/fish-comparison";
 import { IFish } from "@/types/fish.type";
+import useAuthStore from "@/stores/useAuthStore";
+import { UserRole } from "@/types/user.type";
+import { FishItemManage } from "./fish-item-manage";
 
 export default function FishList() {
-  const { data: fishList, isLoading, isError } = useFish();
+  const { user } = useAuthStore();
+  const { data: fishList, refetch: refreshFishList, isLoading, isError } = useFish();
   const [selectedFish, setSelectedFish] = useState<IFish[]>([]);
   const [showComparison, setShowComparison] = useState(false);
+
+  const onTriggerUpdatedFish = () => {
+    refreshFishList();
+  }
+
+  const onCheckPermission = () => {
+    if (!user) return false;
+
+    const allowedManageRole: UserRole[] = [UserRole.STAFF];
+    return allowedManageRole.includes(user.roleName);
+  }
 
   const toggleFishSelection = (fish: IFish) => {
     setSelectedFish(prev => {
@@ -36,7 +51,6 @@ export default function FishList() {
     }
   };
 
-
   if (isLoading) {
     return (
       <ScrollView className="mb-10 flex-col">
@@ -57,6 +71,22 @@ export default function FishList() {
         )}
       </SafeAreaView>
     );
+  }
+
+  if (onCheckPermission()) {
+    return (
+      <FlatList
+        data={fishList}
+        renderItem={({ item }) => <FishItemManage onTriggerUpdatedFish={onTriggerUpdatedFish} fish={item} />}
+        keyExtractor={(item) => item.id.toString()} // Ensure id is a string
+        contentContainerStyle={{ paddingBottom: 20 }}
+        ListEmptyComponent={
+          <SafeAreaView className="my-10 flex-1 items-center justify-center bg-gray-50">
+            <Text className="text-gray-500">No fish to display.</Text>
+          </SafeAreaView>
+        }
+      />
+    )
   }
 
   return (
