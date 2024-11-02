@@ -1,14 +1,14 @@
 import React from "react";
 
-import useAuthStore from "@/stores/useAuthStore";
-import Profile from "@/components/sharedComponents/profile";
+import { SafeAreaView } from "react-native";
+import CustomerProfile from "@/components/sharedComponents/customerProfile";
 
 
 export default function Profile_() {
   return (
-    <>
-      <Profile />
-    </>
+    <SafeAreaView className="flex h-full bg-gray-50">
+      <CustomerProfile />
+    </SafeAreaView>
   );
 }
 
