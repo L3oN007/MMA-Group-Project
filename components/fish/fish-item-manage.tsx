@@ -110,7 +110,9 @@ function FishItemManage({ fish, onTriggerUpdatedFish }: Props) {
           onPress={() => router.navigate(`/(root)/fish/${fish.id}`)}
         >
           <Image
-            source={{ uri: fish?.koiFishImages[0] || "abc" }}
+            source={{
+              uri: "https://storage.googleapis.com/pod_public/1300/135218.jpg",
+            }}
             className="h-40 w-full rounded-t-xl"
             resizeMode="center"
           />
