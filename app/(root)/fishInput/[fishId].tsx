@@ -94,10 +94,10 @@ export default function fishInput() {
                 resizeMode="cover"
             />
             <View className="p-4">
-                <TextInput onChangeText={(e) => onUpdateFishInfo('name', e)} className={`text-2xl font-semibold text-gray-800 ${inputStyle}`} value={interactedFish?.name}></TextInput>
+                <TextInput onChangeText={(e) => onUpdateFishInfo('name', e)} className={`text-2xl font-semibold text-gray-800 ${inputStyle}`} value={interactedFish?.name} />
                 <View className="flex flex-row mt-2">
                     <Text className="text-base text-gray-500">Origin:</Text>
-                    <TextInput onChangeText={(e) => onUpdateFishInfo('origin', e)} className={`w-6/12 ml-2 ${inputStyle}`} value={interactedFish?.origin}></TextInput>
+                    <TextInput onChangeText={(e) => onUpdateFishInfo('origin', e)} className={`w-6/12 ml-2 ${inputStyle}`} value={interactedFish?.origin} />
                 </View>
 
                 <View className="mt-4 border-t border-gray-200 pt-4">
@@ -115,7 +115,7 @@ export default function fishInput() {
                         <View className="flex-row justify-between mt-2">
                             <Text className="text-gray-600">Length:</Text>
                             <View className="w-4/12 flex flex-row items-center pr1-3">
-                                <TextInput onChangeText={(e) => onUpdateFishInfo('length', Number(e))} keyboardType="numeric" className={`w-10/12 ml-2 text-right mr-1 ${inputStyle}`} value={(interactedFish?.length || 0).toString()}></TextInput>
+                                <TextInput onChangeText={(e) => onUpdateFishInfo('length', Number(e))} keyboardType="numeric" className={`w-10/12 ml-2 text-right mr-1 ${inputStyle}`} value={(interactedFish?.length || 0).toString()} />
                                 <Text className="text-gray-800">cm</Text>
                             </View>
                         </View>
@@ -123,7 +123,7 @@ export default function fishInput() {
                         <View className="flex-row justify-between mt-2">
                             <Text className="text-gray-600">Weight:</Text>
                             <View className="w-4/12 flex flex-row items-center pr-3">
-                                <TextInput onChangeText={(e) => onUpdateFishInfo('weight', Number(e))} keyboardType="numeric" className={`w-10/12 ml-2 text-right mr-1 ${inputStyle}`} value={(interactedFish?.weight.toString() || 0).toString()}> </TextInput>
+                                <TextInput onChangeText={(e) => onUpdateFishInfo('weight', Number(e))} keyboardType="numeric" className={`w-10/12 ml-2 text-right mr-1 ${inputStyle}`} value={(interactedFish?.weight.toString() || 0).toString()} />
                                 <Text className="text-gray-800">g</Text>
                             </View>
                         </View>
@@ -131,7 +131,7 @@ export default function fishInput() {
                         <View className="flex-row justify-between mt-2">
                             <Text className="text-gray-600">Daily Feed Amount:</Text>
                             <View className="w-4/12 flex flex-row items-center pr-3">
-                                <TextInput onChangeText={(e) => onUpdateFishInfo('dailyFeedAmount', Number(e))} keyboardType="numeric" className={`w-10/12 ml-2 text-right mr-1 ${inputStyle}`} value={(interactedFish?.dailyFeedAmount ?? 0).toString()}> </TextInput>
+                                <TextInput onChangeText={(e) => onUpdateFishInfo('dailyFeedAmount', Number(e))} keyboardType="numeric" className={`w-10/12 ml-2 text-right mr-1 ${inputStyle}`} value={(interactedFish?.dailyFeedAmount ?? 0).toString()} />
                                 <Text className="text-gray-800">g</Text>
                             </View>
                         </View>
@@ -139,7 +139,7 @@ export default function fishInput() {
                         <View className="flex-row justify-between mt-2">
                             <Text className="text-gray-600">Last Health Check:</Text>
                             <View className="w-4/12 flex flex-row items-center pr-3">
-                                <TextInput onChangeText={(e) => onUpdateFishInfo('lastHealthCheck', e)} maxLength={10} className={`w-full ml-2 text-right mr-1 ${inputStyle}`} value={interactedFish?.lastHealthCheck ? format(interactedFish?.lastHealthCheck, "dd/MM/yyyy") : ""}></TextInput>
+                                <TextInput onChangeText={(e) => onUpdateFishInfo('lastHealthCheck', e)} maxLength={10} className={`w-full ml-2 text-right mr-1 ${inputStyle}`} value={interactedFish?.lastHealthCheck ? format(interactedFish?.lastHealthCheck, "dd/MM/yyyy") : ""} />
                             </View>
                             {/* {format(new Date(interactedFish?.lastHealthCheck), "dd/MM/yyyy")} */}
                         </View>
@@ -151,7 +151,7 @@ export default function fishInput() {
                         {interactedFish?.koiBreeds && interactedFish?.koiBreeds.length > 0 ? (
                             interactedFish?.koiBreeds.map((breed, index) => (
                                 <View key={index} className="mt-2 flex flex-row items-center">
-                                    <TextInput placeholder="Breed name" onChangeText={(e) => onUpdateFishBreed(index, e)} className={`w-8/12 text-gray-800 font-medium mr-2 ${inputStyle}`} value={breed.name}></TextInput>
+                                    <TextInput placeholder="Breed name" onChangeText={(e) => onUpdateFishBreed(index, e)} className={`w-8/12 text-gray-800 font-medium mr-2 ${inputStyle}`} value={breed.name} />
                                     <Ionicons onPress={() => onRemoveBreed(index)} name="trash-bin-sharp" size={15} color="red" />
                                 </View>
                             ))
@@ -165,13 +165,13 @@ export default function fishInput() {
 
                     <View className="mt-4 border-t border-gray-200 pt-4">
                         <Text className="text-lg font-semibold text-gray-700">Personality Traits</Text>
-                        <TextInput onChangeText={(e) => onUpdateFishInfo('personalityTraits', e)} className={`text-gray-600 mt-2 ${inputStyle}`} value={interactedFish?.personalityTraits}></TextInput>
+                        <TextInput onChangeText={(e) => onUpdateFishInfo('personalityTraits', e)} className={`text-gray-600 mt-2 ${inputStyle}`} value={interactedFish?.personalityTraits} />
                     </View>
 
                     <View className="mt-4 mb-8 border-t border-gray-200 pt-4">
                         <Text className="text-lg font-semibold text-gray-700">Price</Text>
                         <View className="w-8/12 flex flex-row items-center mr-2">
-                            <TextInput onChangeText={(e) => onUpdateFishInfo('price', Number(e))} keyboardType="numeric" className={`w-8/12 text-gray-600 mr-2 ${inputStyle}`} value={(interactedFish?.price ?? 0).toString()}></TextInput>
+                            <TextInput onChangeText={(e) => onUpdateFishInfo('price', Number(e))} keyboardType="numeric" className={`w-8/12 text-gray-600 mr-2 ${inputStyle}`} value={(interactedFish?.price ?? 0).toString()} />
                             <Text className="text-gray-600 mt-2">VND</Text>
                         </View>
                     </View>
